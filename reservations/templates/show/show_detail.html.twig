@@ -1,0 +1,103 @@
+ 
+{% extends 'base.html.twig' %}
+{% block javascripts %} 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+{% endblock %}
+
+
+{% block body %}
+
+<div class="profil">
+    <h1 style="text-align:center; color:blue;">{{ show.title|capitalize }}</h1>
+
+    <table class="table" style="width: 400px; margin-left: 265px; float:left;">
+        <tbody>
+			<tr style="">
+				<td colspan="2" style="border-top:none;"><img src="{{ show.posterurl }}" alt="" width="450" height="300" /></td>
+				</tr>
+			{% if app.user and app.user.role.getRole == 'admin' %}
+				<tr>
+					<th>Titre</th>
+					<td>{{ show.title|title }}</td>
+				</tr>
+				<tr>
+					<th>Auteur</th>
+					<td>
+						{% for author  in show.authors %}
+							{{ author.firstname }}&nbsp;{{ author.lastname }}
+						{% endfor %}
+					</td>
+				</tr>
+			{% endif %}
+			<tr>
+                <th >Date</th>
+                <td>
+					{% if i is empty %}
+					{% set i = 1 %}
+					<ol>
+						{% for representation in show.representations%}
+							<li>
+								{{ representation.schedule|date("d/m/Y") }}
+								{{ representation.schedule|date("H:m") }}
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								{% if representation.show.bookable %}
+									<a href="{{ path('reservation_reserver', {'id': show.id, 'show_numero': i}) }}"
+											style="text-decoration:none;">Resever</a>
+								{% endif %}
+							</li>
+							{% set i = i + 1 %}
+						{% endfor %}
+					</ol>
+					{% else%}
+						{% for representation in show.representations%}
+							{% if loop.index == i %}
+								{{ representation.schedule|date("d/m/Y") }}
+								{{ representation.schedule|date("H:m") }} 
+							{% endif %}
+						{% endfor %}
+					{% endif %}
+				</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ show.location.designation }}</td>
+            </tr>
+			{#
+            <tr>
+                <th>Show</th>
+                <td>
+					{% set cnt = show.representations|length %}
+					{{ cnt }}
+				</td>
+            </tr>
+			#}
+            <tr>
+                <th>Prix</th>
+                <td>{{ show.price|number_format(2, ',', '.') }}&nbsp;&euro;</i></td>
+            </tr>
+            <tr>
+                <th>Réservable</th>
+                {% if show.bookable %}
+					<td>Oui</td>
+				{% else %}
+					<td>Non</td>
+				{% endif %}
+            </tr>
+			{% if reserver == true %}
+				<tr>
+					{% include 'reservation/_form.html.twig' %}
+				</tr>
+			{% endif %}
+		</tbody>
+    </table> 
+
+	<div style='float:left; margin-left:310px; display:inline;'>
+		<div style='float:left; clear: both;'>
+		
+		</div>
+	</div>
+</div>
+
+{% endblock %}

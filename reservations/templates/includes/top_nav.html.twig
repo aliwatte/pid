@@ -1,0 +1,24 @@
+	
+	{%  set menu_show = "nav-item" %}
+	{%  set menu_profil = "nav-item" %}
+	{%  set menu_reservation = "nav-item" %}
+	
+	{%  if  action  == 'show' %}
+		{%  set menu_show = "active nav-item" %}
+	{% elseif action  == 'user_profil' %}
+		{%  set menu_profil = "active nav-item" %}
+	{% elseif action  == 'reservation' %}
+		{%  set menu_reservation = "active nav-item" %}
+	{% endif %}
+	
+
+	<div class="admin">
+		<table style="width: 400px; margin-left: 170px;">
+			<td><a  href="/show " class="nav-link">Utilisateurs<span style="font-size:16px; margin-right:5px;" 
+						class="float-left hidden-xsd-none d-sm-block showopacity fa fa-user"></span></td>
+			<td><a  href="/show " class="nav-link">Artistes<span style="font-size:16px; margin-right:5px;" 
+						class="float-left hidden-xsd-none d-sm-block showopacity fa fa-user-circle-o"></span></td>
+			<td><a href="/show " class="nav-link">Representations<span style="font-size:16px;margin-right:5px;" 
+						class="float-left hidden-xsd-none d-sm-block showopacity fa fa-film"></span></td>
+		</table>
+	</div>

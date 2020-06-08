@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	
+	{{ form_start(form) }}
+		{{ form_label(form.importer, ' ', { 'attr': {'style': 'height:1px;'}}) }}
+		{{ form_widget(form.importer) }}
+		{{ form_errors(form.importer) }}
+		<button class="btn btn-primary" style="margin-top:7px;">{{ button_label|default('Importer') }}</button>
+	{{ form_end(form) }}
+
+{% endblock %}

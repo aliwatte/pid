@@ -1,0 +1,79 @@
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-dark bg-dark sidebar navbar-expand-md" role="navigation">
+	{# Brand and toggle get grouped for better mobile display #}
+	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+		<span class="sr-only">Toggle navigation</span>
+		&#x2630;
+	</button>
+	
+	{%  set menu_show = "nav-item" %}
+	{%  set menu_prochain = "nav-item" %}
+	{%  set menu_profil = "nav-item" %}
+	{%  set menu_reservation = "nav-item" %}
+	{%  set menu_contact = "nav-item" %}
+	{%	set menu_admin = "nav-item" %}
+	
+	{%  if  action  == 'show' %}
+		{%  set menu_show = "active nav-item" %}
+	{% elseif action  == 'prochain' %}
+		{%  set menu_prochain = "active nav-item" %}
+	{% elseif action  == 'user_profil' %}
+		{%  set menu_profil = "active nav-item" %}
+	{% elseif action  == 'reservation' %}
+		{%  set menu_reservation = "active nav-item" %}
+	{% elseif action  == 'contact' %}
+		{%  set menu_contact = "active nav-item" %}
+	{% elseif action  == 'admin' %}
+		{%  set menu_admin = "active nav-item" %}
+	{% endif %}
+	
+	{# Collect the nav links, forms, and other content for toggling #}
+	<div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+		<ul class="nav navbar-nav">
+			<li><span>Menu</span></li>
+
+			<li class={{ menu_show }} ><a onmouseover="this.style.backgroundColor='#006db9'" href="/show "
+								onmouseout="this.style.backgroundColor=''"
+						class="nav-link">Accueil<span style="font-size:16px;" 
+				class="float-right hidden-xsd-none d-sm-block showopacity fa fa-home"></span></a></li>
+				
+			<li class={{ menu_prochain }}><a onmouseover="this.style.backgroundColor='#006db9'" 
+						href="{{ path('prochainspectactle') }}" onmouseout="this.style.backgroundColor=''"
+						class="nav-link">Prochains spectacles<span style="font-size:16px;" 
+				class="float-right hidden-xsd-none d-sm-block showopacity fa fa-th-list"></span></a></li>
+			
+			{% if app.user and app.user.role.getRole == 'admin' %}
+			<li class={{ menu_admin }}><a onmouseover="this.style.backgroundColor='#006db9'" 
+						href="{{ path('administration') }}" onmouseout="this.style.backgroundColor=''"
+						class="nav-link">Administration<span style="font-size:16px;" 
+				class="float-right hidden-xsd-none d-sm-block showopacity fa fa-lock"></span></a></li>
+			{% endif %}
+			
+			{% if app.user %}
+				<li class={{ menu_reservation }}><a onmouseover="this.style.backgroundColor='#006db9'" 
+						href="{{ path('reservation_index') }}"
+									onmouseout="this.style.backgroundColor=''"   
+						class="nav-link">Reservations<span style="font-size:16px;" 
+					class="float-right hidden-xsd-none d-sm-block showopacity fa fa-ticket"></span></a></li>
+					
+				<li class={{ menu_profil }}><a onmouseover="this.style.backgroundColor='#006db9'" 
+						href="{{ path('user_profil', {'id': app.user.id, 'admin': 0}) }}"
+									onmouseout="this.style.backgroundColor=''"   
+						class="nav-link">Profil<span style="font-size:16px;" 
+					class="float-right hidden-xsd-none d-sm-block showopacity fa fa-address-card-o"></span></a></li>
+					Reservations
+			{% endif %}	
+			
+			<li class={{ menu_contact }}><a onmouseover="this.style.backgroundColor='#006db9'" 
+						href="{{ path('contact') }}"
+								onmouseout="this.style.backgroundColor=''"
+						class="nav-link">Contact<span style="font-size:16px;" 
+				class="float-right hidden-xsd-none d-sm-block showopacity fa fa-copyright"></span></a></li>
+				
+		</ul>
+	</div>
+</nav>

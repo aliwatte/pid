@@ -1,0 +1,208 @@
+
+.pos {
+	margin: 25px;
+}
+
+.space {
+	margin: 10px;
+}
+
+header a#login {
+    margin-right: 10px;
+    background-color: lightgreen;
+    border-color: green;
+    color: darkgreen;
+}
+
+header form#frmSearch {
+    margin-right: 30px;
+}
+
+.footer {
+	position: relative;
+    border-top: 1px solid #dee2e6!important;
+    padding: 0 15px;
+    text-align: center;
+	margin-top:620px;
+}
+
+.usr{
+	width:100px;
+	border-radius:5px;
+	font-size:12px;
+	font-weight:bold;
+	color:rgb(120,120,120);
+	padding:5px;
+	margin-top:px;
+}
+
+.show, .se_connecter, .profil, .inscription, .contact, .admin{
+	position: absolute;
+}
+
+.admin{
+	top:30px;
+	margin-left:50px;
+	width:870px;
+}
+
+.show{
+	top: 35px;
+	margin-left:15px;
+}
+
+.edit_form_btn{
+	position: relative;
+	display: inline;
+	bottom:35px;
+	left:380px;
+}
+
+.container, .row, .display, .display #table_shows, .profil{
+	width:900px;
+	text-align:center;
+}
+
+.contact{
+	margin-left:200px;
+	max-width: 600px; 
+	width: 95%; 
+	font: 15px/1.1 sans-serif;
+}
+
+.image {
+	display:block;
+	width: 450px;
+	height: 330px;
+	overflow: hidden;
+	background-color:darkred;
+	border: 3px solid #F2F2F2;
+	margin-left: 200px;
+ }
+ 
+ .image ul {
+	width: 450%;
+	height: 330px;
+	padding:0; 
+	margin:0;
+	list-style: none;
+ }
+ 
+ .image li {
+	float: left;
+ }
+
+ .prochainement{
+	position:absolute; 
+	top: 50px;
+	margin-left:100px;
+	clear:both;
+ }
+  
+ .infoText{
+  position: relative;
+  display: inline-block;
+}
+
+.infoText .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #fff;
+  color: #555;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 15%;
+  left: 34%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.infoText .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.infoText:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.service{
+	position: absolute;
+	margin-left:320px;
+}
+
+.service h2{
+	text-align:center;
+}
+
+@media (min-width: 768px) {
+	
+	.container, .row, .display{
+		text-align:center;
+	}
+	
+	.formulaire{
+		margin-left:300px;
+	}
+}
+
+
+@media (min-width: 1100px) {
+		
+	.container, .row, .display, .display #table_shows, .profil, .admin{
+		width:1200px;
+		text-align:center;
+		margin-right:450px;
+	}
+	
+	.image{
+		margin-left:350px;
+	}
+
+	.formulaire, .profil{
+		margin-left:400px;
+	}
+	
+	.contact{
+		margin-left:500px;
+	}
+	
+	.se_connecter{
+		margin-left:200px;
+	}
+	
+	.inscription{
+		margin-left:300px;
+	}
+	
+	.show,.admin{
+		margin-left:250px;
+	}
+	
+	.fin_inscription {
+		margin-left:400px;
+	}
+	
+	.prochainement{
+		margin-left:250px;
+	}
+	
+	.prochainement h2{
+		margin-left:350px;
+	}
+	
+	.service{
+	margin-left:650px;
+}
+}

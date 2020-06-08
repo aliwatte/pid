@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+	{# script necessaire pour user_validation est deplancer dans defaut/index.html.twig #}
+	{#
+	<script src="{{ asset('lib/jquery-3.3.1.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('lib/jquery-validation-1.19.0/jquery.validate.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('script/user_validator.js') }}"></script>
+	#}
+	
+<script>
+	$(document).ready(function(){
+		function ajax_call(id){
+			var login = $('#login');
+			$.ajax({
+				url:"path('findlogin')",
+				method:"POST",
+				data:{id: id}
+			}).done(function($msg){
+				refresh();
+			});
+		}
+		function refresh(){
+			login.innerHTML = '';
+			$.each(JSON.parse(msg['data"]), function(i, item){
+				var input = document.createElement('input');
+				var texte = document.createTextNode(item.prenom + " " + item.nom);
+				input.apendChild(texte);
+				login.appendChild(input);
+			});			
+		}
+	});
+</script>
+	
+{% endblock %}
+
+{% block body %}
+
+<div class="inscription" >
+	{% if app.user %}
+		<br><br><br><br><br>
+		<div class="mb-3">
+			<h3>Vous etes connecter en tant qu  {{ app.user.username }}. Voulez vous vous
+			<a href="{{ path('app_logout') }}">deconnecter</a> ?</h3> 
+		</div>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	{% else %}
+		<div style="margin-left:300px;">
+			<h1 style="text-align:center;">S'inscrire</h1>	
+		</div>
+		{{ form_start(registrationForm, { 'attr': {'class': 'formulaire', 'id': 'signupForm' }, 'attr': {'style': 'width:400px; float:left; margin-left:300px;'}    } ) }}
+		
+			{{ form_row(registrationForm.login, { 'label': 'Utilisateur', 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control', 'id': 'login'}  }) }}
+			<span class="errors" style="color:red;" id="errLogin"></span>
+			
+			{{ form_row(registrationForm.firstname, { 'label': 'Nom', 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control'}  }) }}
+			{{ form_row(registrationForm.lastname, { 'label': 'Prenom', 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control'}  }) }}
+			{{ form_row(registrationForm.email, { 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control'}  }) }}
+			{{ form_row(registrationForm.plainPassword, { 'label': 'Mot de passe', 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control'}  }) }}
+			{{ form_row(registrationForm.confPassword, { 'label': 'Confirmer le mot de passe', 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control'}  }) }}
+			{{ form_row(registrationForm.langue, { 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control', 'style' : 'height:35px;'}}) }}
+			<br>
+			{{ form_row(registrationForm.agreeTerms, { 'attr': {'style': 'margin-left:10px;'} }) }}
+			<br>
+			<button class="btn-lg btn-primary">S'inscrire</button>
+		<br>	
+		{{ form_end(registrationForm) }}
+		
+	{% endif %}
+
+</div>
+<br><br><br>
+{% endblock %}

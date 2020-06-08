@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="show">
+		<div id="page-content-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<h2>Tous les utilisateurs <span style="float:left;"><a href="{{ path('user_new') }}">Nouveau</span></a><span style="float:right;"><a href="{{ path('administration') }}">Retour</a></span></h2>
+						
+						<table id="table_users" class="display">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Login</th>
+									<th>Nom</th>
+									<th>Prenom</th>
+									<th>Email</th>
+									<th>Langue</th>
+									<th>action 1</th>
+									<th>action 2</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for user in users %}
+									<tr>
+										<td>{{ user.id }}</td>
+										<td>{{ user.login }}</td>
+										<td>{{ user.firstname }}</td>
+										<td>{{ user.lastname }}</td>
+										<td>{{ user.email }}</td>
+										{% if user.langue == 'fr' %}
+											<td>Français</td>
+										{% elseif user.langue == 'en' %}
+											<td>English</td>
+										{% endif%}
+										<td><a href="{{ path('user_profil', {id: user.id, 'pass' : 0, 'admin' : 1}) }}">Profil</a></td>
+										<td>{{ include('user/on_admin_request_delete.html.twig') }}</td>
+									</tr>
+								{% else %}
+									<tr>
+										<td colspan="8">aucune entrer trouve</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+						
+					<div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{% endblock %}
+{% block javascripts %} 
+	<script>	
+		function htmlbodyHeightUpdate() {
+			var height3 = $(window).height()
+			var height1 = $('.nav').height() + 50
+			height2 = $('.main').height()
+			if (height2 > height3) {
+				$('html').height(Math.max(height1, height3, height2) + 10);
+				$('body').height(Math.max(height1, height3, height2) + 10);
+			} else {
+				$('html').height(Math.max(height1, height3, height2));
+				$('body').height(Math.max(height1, height3, height2));
+			}
+		}
+		
+		$(document).ready( function () {
+		
+			$('#table_users').DataTable({responsive: false});
+		
+			/*$('#table_shows').DataTable({responsive: true}); 
+			//Pour le menu escamotable
+			htmlbodyHeightUpdate()
+			$(window).resize(function() {htmlbodyHeightUpdate()});
+			$(window).scroll(function() {height2 = $('.main').height()htmlbodyHeightUpdate()});*/
+		
+		});
+	</script>
+{% endblock %}

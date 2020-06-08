@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %} 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+{% endblock %}
+
+
+{% block body %}
+<div class="profil">
+    <h1 style="text-align:center;">Infos : <span style="color:blue;">{{ user.firstname|capitalize }}</span></h1>
+
+    <table class="table" style="width: 400px; margin-left: 300px; float:left;">
+        <tbody>
+			{% if app.user.role.getRole == 'admin' %}
+				<tr>
+					<th>Id</th>
+					<td>{{ user.id }}</td>
+				</tr>
+				<tr>
+					<th>Role</th>
+					<td>{{ user.role.getRole }}</td>
+				</tr>
+			{% endif %}
+            <tr>
+                <th>Utilisateur</th>
+                <td>{{ user.login }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Langue</th>
+			{% set langue = user.langue %}
+			{% if langue == 'fr'%}
+				<td>Français</td>
+			{% elseif langue == 'en' %}
+				<td>English</TD>
+			{% elseif langue == 'nl' %}
+				<td>Dutch</td>
+			{% endif %}
+            </tr>
+        </tbody>
+    </table> 
+	
+	<div style='float:left; margin-left:310px; display:inline;'>
+		<div style='float:left; clear: both;'>
+			<a href="{{ path('user_edit', {'id': user.id, 'pass': 0, 'admin' : admin }) }}"><button type="" class="btn btn-primary">Modifier</button></a>
+			&nbsp;
+			{% if admin == 1 %}
+				<a href="{{ path('user') }}"><button type="" class="btn btn-success">Retour</button></a>
+			{% else %}
+				<a href="{{ path('home') }}"><button type="" class="btn btn-success">Retour</button></a>
+			{% endif %}
+		</div>
+		&nbsp;
+		<div style='float:left; margin-left:10px;'>	
+		   {{ include('user/_delete_form.html.twig') }} 
+		</div>
+	</div>
+</div>
+{% endblock %}

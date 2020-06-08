@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+  
+
+{% block stylesheets %}
+	
+	{% for content_ in content %}
+		{% if loop.index== 4 %}
+			{% for cont in content_ %}
+				{% for obj in cont.event %}	
+				{#
+				{{ cont.mediaObject.name }}<br>
+				{{ cont.mediaObject.copyrightHolder }}<br>
+				#}
+				{#
+				{{ obj.name }}<br>
+				{{ obj.slug }}<br>
+				{{ obj.publishedAt  }}<br><br><br> 
+				#}
+				{% for ob in obj %}
+				{{ ob }}<br>
+				{% endfor %}
+				{% endfor %}
+			{% endfor %}
+		{% endif %}	
+	{% endfor %}
+	
+{% endblock %}

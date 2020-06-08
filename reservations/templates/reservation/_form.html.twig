@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{#
+{% block body %}
+<div class="inscription" >
+		
+		{{ form_start(form, { 'attr': {'class': 'formulaire' }, 'attr': {'style': 'width:400px; float:left; margin-left:300px;'}    } ) }}
+			{{ form_row(form.places, { 'label': 'Nombre de place', 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control'}  }) }}
+			<br>
+			<button class="btn btn-primary">Reserver</button>
+		<br>	
+		{{ form_end(form) }}
+		
+</div>
+{% endblock %}
+#}
+
+
+{% block body %}
+<div class="profil" >
+		
+		{{ form_start(form, { 'attr': {'class': 'formulaire' }, 'attr': {'style': 'width:400px; float:left; margin-left:300px;'}    } ) }}
+			<table class="table" style="width: 400px; margin-left: 265px; float:rigth;">
+				<tr>
+					<th>{{ form_label(form.places, 'Entrer le nombre de palce') }}</th>
+					<td style:"width:30px;">{{ form_widget(form.places, { 'attr': {'class': 'form-control'}, 'attr': {'style': 'width:40px;', 'min' : '1'} } ) }}</td>
+				</tr>
+				<tr>
+					<td>
+						<a class="btn btn-success" href="{{ path('show_show', {'id': show.id} ) }}" style="text-decoration:none;">
+							Retour
+							</a>
+					</td>
+					<td><button class="btn btn-primary">Reserver</button></td>
+				</tr>
+			</table>
+		{{ form_end(form) }}
+		
+</div>
+{% endblock %}

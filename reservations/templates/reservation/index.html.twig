@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+<div class="profil">
+
+    <h1 style="text-align:center;">Mes reservations</h1>
+
+    <table class="table" style="width: 400px; margin-left: 265px; float:left;">
+		
+		<tr>
+			<th></th>
+			{% if app.user.role.getRole == 'admin' %}
+				<th>Id</th>
+			{% endif %}
+			<th>Titre</th><th>Date</th><th>Heure</th><th>Places</th> {# <th>actions</th> #}		
+		</tr>
+		{% set i = 1%}
+       {% for reservation in reservations %}		{# #}
+			{% if reservations is not empty %}
+				<tr>
+					<td style="text-align:left;"> {{ i }}.</td>
+					{% if app.user.role.getRole == 'admin' %}
+						<td style="text-align:left;">{{ reservation.id }}</td>
+					{% endif %}
+					<td style="text-align:left;">{{ reservation.representation.show.title }}</td>
+					<td style="text-align:left;">
+						{{ reservation.representation.schedule|date("d/m/Y") }}
+					</td>
+					<td style="text-align:left;">
+						{{ reservation.representation.schedule|date("H:m") }}
+					</td>
+					<td style="text-align:left;">{{ reservation.places }}</td>
+				   {#
+					<td>
+						<a href="{{ path('reservation_show', {'id': reservation.id}) }}">show</a>
+						<a href="{{ path('reservation_edit', {'id': reservation.id}) }}">edit</a>
+					</td>
+					#}
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Aucune reservation encore.</td>
+				</tr>
+			{% endif %}
+			{% set i = i + 1 %}
+       {% endfor %}	{# #}
+		
+    </table>
+
+    {# <a href="{{ path('reservation_new') }}">Create new</a> #}
+	
+</div>
+
+{% endblock %}

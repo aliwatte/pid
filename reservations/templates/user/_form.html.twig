@@ -1,0 +1,60 @@
+
+
+{% if pass == 'new'  %}
+	<div style="margin-left:220px;">
+		<h1 style="text-align:center;">Nouveau membre</h1>
+	</div>	
+{% endif %}
+
+{{ form_start(form, { 'attr': {'class': 'formulaire', 'style': 'width:400px; float:left; margin-left:300px;'} } ) }}
+	
+	{{ form_label(form.login, 'Utilisateur', { 'label_attr': {'class': 'control-label'}}) }}
+	{{ form_widget(form.login, {'attr': {'class': 'form-control'}  } ) }}
+	{{ form_errors(form.login) }}
+	
+	{{ form_label(form.firstName, 'Nom', { 'label_attr': {'class': 'control-label'}}) }}
+	{{ form_widget(form.firstName, {'attr': {'class': 'form-control'}  } ) }}
+	{{ form_errors(form.firstName) }}
+	
+	{{ form_label(form.lastName, 'Prenom', { 'label_attr': {'class': 'control-label'}} ) }}
+	{{ form_widget(form.lastName, {'attr': {'class': 'form-control'}  } ) }}
+	{{ form_errors(form.lastName) }}
+	
+	{{ form_label(form.email, 'E-mail', { 'label_attr': {'class': 'control-label'}}) }}
+	{{ form_widget(form.email, {'attr': {'class': 'form-control'}  } ) }}
+	{{ form_errors(form.email) }}
+	
+	{{ form_label(form.langue, 'Langue', { 'label_attr': {'class': 'control-label'}}) }}
+	{{ form_widget(form.langue, {'attr': {'class': 'form-control'}  } ) }}
+	
+	{% if pass == 1 %}
+		<br>
+		<a href="{{ path('user_edit', {'id': user.id, 'pass' : 0, 'admin' : admin} ) }}">Ne pas modifier le mot de passe</a>
+		<br><br>
+		{{ form_label(form.password, 'Mot de passe', { 'label_attr': {'class': 'control-label'}}) }}
+		{{ form_widget(form.password, {'attr': {'class': 'form-control'}  } ) }}
+		{{ form_errors(form.password) }}
+
+		{{ form_label(form.newPassword, 'Nouveau mot de passe', { 'label_attr': {'class': 'control-label'}}) }}
+		{{ form_widget(form.newPassword, {'attr': {'class': 'form-control'}  } ) }}
+		{{ form_errors(form.newPassword) }}
+
+		{{ form_label(form.confPassword, 'Confirmer nouveau mot de passe', { 'label_attr': {'class': 'control-label'}}) }}
+		{{ form_widget(form.confPassword, {'attr': {'class': 'form-control'}  } ) }}
+		{{ form_errors(form.confPassword) }}
+		
+		<br>
+		
+	{% elseif pass == 0 and admin == 0 %}
+		<br>
+		<a href="{{ path('user_edit', {'id': user.id, 'pass' : 1, 'admin' : admin} ) }}">Modifier le mot de passe</a>
+		<br><br>
+		
+	{% else %}
+		<br>
+		
+	{% endif %}
+	
+	<button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+	
+{{ form_end(form) }} 

@@ -1,0 +1,129 @@
+
+{% block javascript%}
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		var interval;
+		$(function(){
+			start_animation();
+		});
+		function start_animation(){
+			interval = setInterval(function(){
+				$(".image ul").animate({marginLeft:-350},800,function(){
+					$(this).css({marginLeft:0}).find("li:last").after($(this).find("li:first"));
+				})
+			}, 3500);
+		}
+
+		function stop_animation(){
+			clearInterval(interval);
+		}
+	</script>
+
+{% endblock %}
+
+{% block body %}
+<div class="show">
+	
+	<div id="page-content-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<h2>{{ titre }}</h2>
+					<div class="image">
+						<ul>
+							{% set i = 0 %}
+							{% for show in shows %}
+							<a href="{{ path('show_show', {'id': show.id} ) }}" style="color:#F2F2F2;">
+							{% if show.posterurl is not null %}
+								<li onmouseout="start_animation()" onmouseover="stop_animation()"><img src="{{ show.posterurl }}" alt="" width="450" height="300" />
+							{% else %}
+								<li onmouseout="start_animation()" onmouseover="stop_animation()"><img src="{{ asset('images/1.jpg') }}" alt="" width="450" height="300" />
+							{% endif %}
+							<p>{{ show.title|title }}</p>
+							</li>
+							</a>
+							{% set i = i + 1 %}
+							{% endfor %}
+						</ul>
+					</div>
+					<br>
+					<table id="table_shows" class="display">
+						<thead>
+							<tr>
+								<th>Titre</th>
+								<th>Auteur</th>
+								<th>Lieu</th>
+								<th>Representations</th>
+								<th>Prix</th>
+								<th>Réservable</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for show  in shows %}
+								{% set cnt = show.representations|length %}
+								<tr>
+									<td>
+										<a href="{{ path('show_show', {'id': show.id} ) }}"
+										style="text-decoration:none;">{{ show.title|title }}</a>
+									</td>
+									<td>
+										{% for author  in show.authors %}
+											{{ author.firstname }}&nbsp;{{ author.lastname }}
+										{% endfor %}
+									</td>
+									{% if show.location is not empty %}
+										<td>{{ show.location.designation }}</td>
+									{% endif %}
+									<td> 
+										{{ cnt }}
+									</td>
+									<td>{{ show.price|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+									{% if show.bookable %}
+										<td>Oui&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="{{ path('show_show', {'id': show.id} ) }}" style="text-decoration:none;">Reserver</a></td>
+									{% else %}
+										<td>Non</td>
+									{% endif %}
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<p>Total: {{ shows|length }} spectacles.</p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+	
+{% block javascripts %} 
+	<script>	
+		function htmlbodyHeightUpdate() {
+			var height3 = $(window).height()
+			var height1 = $('.nav').height() + 50
+			height2 = $('.main').height()
+			if (height2 > height3) {
+				$('html').height(Math.max(height1, height3, height2) + 10);
+				$('body').height(Math.max(height1, height3, height2) + 10);
+			} else {
+				$('html').height(Math.max(height1, height3, height2));
+				$('body').height(Math.max(height1, height3, height2));
+			}
+		}
+		
+		$(document).ready( function () {
+		
+			$('#table_shows').DataTable({responsive: false});
+		
+			/*$('#table_shows').DataTable({responsive: true}); 
+			//Pour le menu escamotable
+			htmlbodyHeightUpdate()
+			$(window).resize(function() {htmlbodyHeightUpdate()});
+			$(window).scroll(function() {height2 = $('.main').height().htmlbodyHeightUpdate()});*/
+		
+		});
+	</script>
+{% endblock %}

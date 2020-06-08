@@ -1,0 +1,64 @@
+{% block javascript %}
+	<script>
+		function in_out(e){
+		if(e.type=='mouseover'){
+			document.getElementById('#infoText').style.display='inline';
+		  }
+		else if(e.type=='mouseout'){
+			document.getElementById('#infoText').style.display='none';
+			}
+		}
+
+		document.getElementById('#spectacle').addEventListener('mouseover',in_out,false)
+		document.getElementById('#spectacle').addEventListener('mouseout',in_out,false)
+	</script>
+{% endblock %}
+
+{% block body %}
+<div class="prochainement">
+	<h2 style='text-align:center;'>Prochains spectacles</h2>
+	<br>
+	<table>
+		<tbody>
+			<tr>
+				{% for show  in prochainnements %}
+					<td>
+						<div class="infoText">
+						
+							{% set display = false %}
+							<span class="tooltiptext">
+								<p>Titre : {{ show.title|title }}</p>
+								<p>Date de representation :</p>
+								{% for representation in show.representations%}
+									{% if date(representation.schedule) >= date() %}
+										<li>
+											{{ representation.schedule|date("d/m/Y") }}
+											{{ representation.schedule|date("H:m") }}
+										</li>
+										{% set display = true %}
+									{% endif %}
+								{% endfor %}
+							</span>
+							
+							{% if display %}
+									
+								<a href="{{ path('show_show', {'id': show.id} ) }}" style="color:#F2F2F2; font-size:8px;">				
+										<img src="{{ show.posterurl }}" alt="" width="250" height="250" />
+									<div style="background-color:darkred; color:#F2F2F2;">
+										<p style="text-align:center;">{{ show.title|title }}</p>
+									</div>
+								</a>
+							
+							{% endif %}
+							
+						</div>
+					</td>
+					{% if loop.index == 5 %}
+						</tr><tr>
+					{% endif %}
+				{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="inscription" >
+
+		{{ include('user/_form.html.twig') }}
+		
+		<div class='edit_form_btn' style="left:420px; top:375px; position: absolute;">
+			<a href="{{ path('user') }}"><button type="" class="btn btn-success">Retour</button></a>
+		<div>
+		
+	</div>
+	
+{% endblock %}

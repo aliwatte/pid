@@ -1,0 +1,8 @@
+#home:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+home:
+    path: /
+    controller: App\Controller\ShowController::index
+    
