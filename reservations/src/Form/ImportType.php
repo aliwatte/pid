@@ -4,17 +4,17 @@ namespace App\Form;
 
 use App\Entity\Show;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\File;
 
-class ImportcsvType extends AbstractType
+class ImportType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('importer', FileType::class, [
+	        ->add('importer', FileType::class, [
                 'label' => '',
 
                 // unmapped means that this field is not associated to any entity property
@@ -29,7 +29,8 @@ class ImportcsvType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
-                        'mimeTypes' => 'text/csv',
+                        'maxSizeMessage' => 'Taille trop large',
+                        'mimeTypes' => ['text/plain'],
                         'mimeTypesMessage' => 'Invalide format CSV',
                     ])
                 ],

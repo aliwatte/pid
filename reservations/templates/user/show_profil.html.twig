@@ -4,14 +4,26 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			$(".profil_").css({"margin-left": (($(window).width()/2) - 200) + "px"  });
+		});
+		
+		$(window).resize(function(){
+			$(".profil_").css({"margin-left": (($(window).width()/2) - 200) + "px"  });
+		});
+		
+	</script>
+	
 {% endblock %}
 
-
 {% block body %}
-<div class="profil">
-    <h1 style="text-align:center;">Infos : <span style="color:blue;">{{ user.firstname|capitalize }}</span></h1>
+<div class="profil_">
+    <h1>Infos : <span style="color:blue;">{{ user.firstname|capitalize }}</span></h1>
 
-    <table class="table" style="width: 400px; margin-left: 300px; float:left;">
+    <table class="table" style="width: 400px;  float:left;">
         <tbody>
 			{% if app.user.role.getRole == 'admin' %}
 				<tr>
@@ -53,7 +65,7 @@
         </tbody>
     </table> 
 	
-	<div style='float:left; margin-left:310px; display:inline;'>
+	<div id="button" style="float:left; display:inline;  clear: both;">
 		<div style='float:left; clear: both;'>
 			<a href="{{ path('user_edit', {'id': user.id, 'pass': 0, 'admin' : admin }) }}"><button type="" class="btn btn-primary">Modifier</button></a>
 			&nbsp;

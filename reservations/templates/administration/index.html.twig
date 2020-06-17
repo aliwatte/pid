@@ -1,17 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block javascripts %}
-	<script  type="text/javascript">
-		function succesLoad() {
-		  alert("L import a reussie!");
-		}
-		
-		{% if succes == "succes" %}
-		
-	{% endif %}<script  type="text/javascript">succesLoad();</script>
-	</script>
-{% endblock %}
-
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; font: 18px/1.5 sans-serif; }
@@ -19,26 +7,55 @@
 </style>
 
 
-	
 <div class="service">
-<div class="example-wrapper">
-	
-    <h1>Service administration</h1>
+	<div class="example-wrapper">
+		
+		<h1>Service administration</h1>
 
-    <br><br>
-    <ul>
-        <li><a href="{{ path('user') }}">Utilisateurs</a></li>
-        <li><a href="{{ path('artist') }}">Artistes</a></li>
-		<li>
-			{% if importer == 0 %}
-				<a href="{{ path('import') }}">Importer spectacles</a>
-			{% else %}
-				<a href="{{ path('administration') }}">Annuler l import</a>
-				{% include 'import/index.html.twig' %}
-			{% endif %}
-		</li>
-		<li><a href="{{ path('export') }}">Exporter spectacles</a></li>
-    </ul>
+		<br><br>
+		<ul>
+			<li><a href="{{ path('user') }}">Utilisateurs</a></li>
+			<li><a href="{{ path('artist') }}">Artistes</a></li>
+			<li>
+				{% if importer == 0 %}
+					<a href="{{ path('import') }}">Importer spectacles</a>
+				{% else %}
+					<a href="{{ path('administration') }}">Annuler l import</a>
+					{% include 'import/index.html.twig' %}
+				{% endif %}
+			</li>
+			<li><a href="{{ path('export') }}">Exporter spectacles</a></li>
+			<li><a href="http://mounirtec.site/api">API Rest</a></li>
+		</ul>
+	</div>
 </div>
-</div>
+{% endblock %}
+
+{% block javascripts %} 
+	
+	<script  type="text/javascript">
+			function succesLoad() {
+			    alert("Les spectacles ont ete mis a jour avec succes!");
+			}
+		</script>
+	{% if succes == "succes" %}
+		<script  type="text/javascript">succesLoad();</script>
+	{% endif %}
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			$(".service").css({"margin-left": (($(window).width()/2) - 150) + "px"  });
+		});
+		
+	</script>
+	
+	<script type="text/javascript">
+		
+		$(window).resize(function(){
+			$(".service").css({"margin-left": (($(window).width()/2) - 150) + "px"  });
+		});
+		
+	</script>
+	
 {% endblock %}

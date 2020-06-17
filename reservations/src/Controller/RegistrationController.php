@@ -38,53 +38,81 @@ class RegistrationController extends AbstractController
 		$repository = $this->getDoctrine()->getRepository(Role::class);
         $role = $repository->findOneByRole('membre');
         $user->setRole($role);
+		
+		$captcha_error ='';
+		
+        /*if ($form->isSubmitted()){ 
+			if($form->isValid() && $this->captchaverify($request->get('g-recaptcha-response'))){ */
 			
-        if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData(),
-                )
-            );
+		if ($form->isSubmitted()) {
+			
+			if ($this->captchaverify($request->get('g-recaptcha-response')) && $form->isValid()) {
+				// encode the plain password
+				$user->setPassword(
+					$passwordEncoder->encodePassword(
+						$user,
+						$form->get('plainPassword')->getData(),
+					)
+				);
 
-			$email = (new Email())
-				->from('no-replay@no-ip.com')
-				->to($user->getEmail())
-				->subject('Bienvenue sur le site Projet Réservations!')
-				->html('
-					<p>
-						Votre inscription a été un accepter .
-						<a style="text-decoration: non; color:blue;" 
-							href="http://localhost:8000/login">Vous connecter ici !</a>
-					</p>
-				');
+				/*$email = (new Email())
+					->from('no-replay@no-ip.com')
+					->to($user->getEmail())
+					->subject('Bienvenue sur le site Projet Réservations!')
+					->html('
+						<p>
+							Votre inscription a été un accepter .
+							<a style="text-decoration: non; color:blue;" 
+								href="http://http://mounirtec.site/login">Vous connecter ici !</a>
+						</p>
+					');
+					
+				$mailer->send($email);*/
 				
-			$mailer->send($email);
-			
-			
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-			
-            $entityManager->flush();
-			
-			return $this->redirectToRoute('app_login');
-			
-            // pour diriger la page d accueil utilisateur authentifier
-            /*return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );*/
-        }
-
+				$entityManager = $this->getDoctrine()->getManager();
+				$entityManager->persist($user);
+				
+				$entityManager->flush();
+				
+				// pour diriger la page d accueil utilisateur authentifier
+			    return $guardHandler->authenticateUserAndHandleSuccess(
+					$user,
+					$request,
+					$authenticator,
+					'main' // firewall name in security.yaml
+				);
+			}
+				// check if captcha response isn't get throw a message
+			elseif(!$this->captchaverify($request->get('g-recaptcha-response'))){		 
+				$captcha_error = 'Verifiez captcha SVP !';
+			}		
+		}
+		
 		return $this->render('defaut/index.html.twig', [
 			'registrationForm' => $form->createView(),
 			'action' => 'inscription',
 			'last_username' => '', 
-			'error' => ''
+			'error' => '',
+			'captcha_error' => $captcha_error,
         ]);
+    }
+	
+	// get success response from recaptcha and return it to controller
+    function captchaverify($recaptcha){
+            $url = "https://www.google.com/recaptcha/api/siteverify";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+                "secret" => "6Le1maUZAAAAAHM_lRPoP666ggNwVzd4HaE_FCaQ", 
+				"response" => $recaptcha));
+            $response = curl_exec($ch);
+            curl_close($ch);
+            $data = json_decode($response);     
+        
+        return $data->success;        
     }
 	
 	/**
@@ -137,3 +165,4 @@ class RegistrationController extends AbstractController
 		return new Response($exist);
 	}
 }
+	

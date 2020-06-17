@@ -2,7 +2,7 @@
 
 {% block body %}
 
-	<div class="show">
+	<div class="table_users">
 		<div id="page-content-wrapper">
 			<div class="container">
 				<div class="row">
@@ -53,7 +53,47 @@
 	</div>
 	
 {% endblock %}
+	
 {% block javascripts %} 
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			if($(window).width() < 1330){
+			    $("#table_users").width($(window).width() - 100);
+				$('#page-content-wrapper').css('width', $(window).width() - 100);
+				$('.container').css('width', $(window).width() - 100);
+				$('.row').css('width', $(window).width() - 100);
+				$('.col-lg-12').css('width', $(window).width() - 100);
+			}
+			else{
+				$("#table_users").width($(window).width() - 300);
+				$('#page-content-wrapper').css('width', $(window).width() - 300);
+				$('.container').css('width', $(window).width() - 300);
+				$('.row').css('width', $(window).width() - 300);
+				$('.col-lg-12').css('width', $(window).width() - 300);
+			}
+		});
+		
+		$(window).resize(function(){
+			if($(window).width() < 1330){
+			    $("#table_users").width($(window).width() - 100);
+				$('#page-content-wrapper').css('width', $(window).width() - 100);
+				$('.container').css('width', $(window).width() - 100);
+				$('.row').css('width', $(window).width() - 100);
+				$('.col-lg-12').css('width', $(window).width() - 100);
+			}
+			else{
+				$("#table_users").width($(window).width() - 300);
+				$('#page-content-wrapper').css('width', $(window).width() - 300);
+				$('.container').css('width', $(window).width() - 300);
+				$('.row').css('width', $(window).width() - 300);
+				$('.col-lg-12').css('width', $(window).width() - 300);
+			}
+		});
+		
+	</script>
+
 	<script>	
 		function htmlbodyHeightUpdate() {
 			var height3 = $(window).height()
@@ -70,13 +110,10 @@
 		
 		$(document).ready( function () {
 		
-			$('#table_users').DataTable({responsive: false});
-		
-			/*$('#table_shows').DataTable({responsive: true}); 
-			//Pour le menu escamotable
-			htmlbodyHeightUpdate()
+			$('#table_users').DataTable({responsive: true}); 
+			htmlbodyHeightUpdate();
 			$(window).resize(function() {htmlbodyHeightUpdate()});
-			$(window).scroll(function() {height2 = $('.main').height()htmlbodyHeightUpdate()});*/
+			$(window).scroll(function() {height2 = $('.main').height()});
 		
 		});
 	</script>

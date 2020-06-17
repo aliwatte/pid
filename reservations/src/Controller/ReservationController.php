@@ -38,7 +38,19 @@ class ReservationController extends AbstractController
 			'error' => '',
         ]);
     }
-
+	
+	/**
+     * @Route("/payement", name="reservation_payement")
+     */
+	public function payement(){
+		$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+		return $this->render('defaut/index.html.twig', [
+		//return $this->render('reservation/payement.php', [
+			'action' => 'payement',
+			'error' => '',
+        ]);
+	}
+	
 	/**
      * @Route("/{id}/{show_numero}", name="reservation_reserver", methods={"GET","POST"})
      */

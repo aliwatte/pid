@@ -21,9 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `reservations`
 --
-DROP DATABASE IF EXISTS `reservations`;
-CREATE DATABASE IF NOT EXISTS `reservations` DEFAULT CHARACTER SET utf8;
-USE `reservations`;
+DROP DATABASE IF EXISTS `mouniri385`;
+CREATE DATABASE IF NOT EXISTS `mouniri385` DEFAULT CHARACTER SET utf8;
+USE `mouniri385`;
 
 -- --------------------------------------------------------
 

@@ -1,8 +1,103 @@
+{% extends 'base.html.twig' %}
 
-{% block javascript%}
+{% block body %}
+	
+	<div class="show" id="show">
+		<div id="page-content-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<br>
+						<div class="image" id="image">
+							<ul>
+								{% set i = 0 %}
+								{% for show in shows %}
+									<a href="{{ path('show_show', {'id': show.id} ) }}" style="color:#F2F2F2;">
+										<li onmouseout="start_animation()" onmouseover="stop_animation()">
+											{% if show.posterurl is not null %}
+												<img src="{{ show.posterurl }}" alt="" width="450" height="305" />
+											{% else %}
+												<img src="{{ asset('images/1.jpg') }}" alt="" width="450" height="305" />
+											{% endif %}
+											<p>{{ show.title|title }}</p>
+										</li>
+									</a>
+									{% set i = i + 1 %}
+								{% endfor %}
+							</ul>
+						</div>
+						
+						<br>
+						
+						<table id="table_shows" class="display">
+							<thead>
+								
+								<tr>
+									<th>#</th>
+									<th>Titre</th>
+									<th>Auteur</th>
+									<th>Lieu</th>
+									<th>Representations</th>
+									<th>Prix</th>
+									<th>Réservable</th>
+								</tr>
+								
+							</thead>
+							<tbody>
+								
+								{% set i = 1 %}
+								{% for show  in shows %}
+									{% set cnt = show.representations|length %}
+									<tr>
+										<td> {{ i }} </td>
+										<td>
+											<a href="{{ path('show_show', {'id': show.id} ) }}"
+											style="text-decoration:none;">{{ show.title|title }}</a>
+										</td>
+										<td>
+											{% for author  in show.authors %}
+												{{ author.firstname }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ author.lastname }}
+											{% endfor %}
+										</td>
+										<td>
+											{% if show.location is not empty %}
+												{{ show.location.designation }}
+											{% endif %}
+										</td>
+										<td> 
+											{{ cnt }}
+										</td>
+										<td>{{ show.price|number_format(2, ',', '.') }}&nbsp;&euro;</td>
+										<td>
+											{% if show.bookable %}
+												Oui&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<a href="{{ path('show_show', {'id': show.id} ) }}" style="text-decoration:none;">Reserver</a></td>
+											{% else %}
+												Non
+											{% endif %}
+										</td>
+									</tr>
+									{% set i = i + 1 %}
+									
+								{% endfor %}
+								
+							</tbody>
+						</table>
+						
+						<p>Total: {{ shows|length }} spectacles.</p>
+						
+					<div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br><br><br>
+{% endblock %}
 
+{% block javascripts %} 
+	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-
+	
 	<script type="text/javascript">
 		var interval;
 		$(function(){
@@ -20,87 +115,36 @@
 			clearInterval(interval);
 		}
 	</script>
-
-{% endblock %}
-
-{% block body %}
-<div class="show">
 	
-	<div id="page-content-wrapper">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<h2>{{ titre }}</h2>
-					<div class="image">
-						<ul>
-							{% set i = 0 %}
-							{% for show in shows %}
-							<a href="{{ path('show_show', {'id': show.id} ) }}" style="color:#F2F2F2;">
-							{% if show.posterurl is not null %}
-								<li onmouseout="start_animation()" onmouseover="stop_animation()"><img src="{{ show.posterurl }}" alt="" width="450" height="300" />
-							{% else %}
-								<li onmouseout="start_animation()" onmouseover="stop_animation()"><img src="{{ asset('images/1.jpg') }}" alt="" width="450" height="300" />
-							{% endif %}
-							<p>{{ show.title|title }}</p>
-							</li>
-							</a>
-							{% set i = i + 1 %}
-							{% endfor %}
-						</ul>
-					</div>
-					<br>
-					<table id="table_shows" class="display">
-						<thead>
-							<tr>
-								<th>Titre</th>
-								<th>Auteur</th>
-								<th>Lieu</th>
-								<th>Representations</th>
-								<th>Prix</th>
-								<th>Réservable</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for show  in shows %}
-								{% set cnt = show.representations|length %}
-								<tr>
-									<td>
-										<a href="{{ path('show_show', {'id': show.id} ) }}"
-										style="text-decoration:none;">{{ show.title|title }}</a>
-									</td>
-									<td>
-										{% for author  in show.authors %}
-											{{ author.firstname }}&nbsp;{{ author.lastname }}
-										{% endfor %}
-									</td>
-									{% if show.location is not empty %}
-										<td>{{ show.location.designation }}</td>
-									{% endif %}
-									<td> 
-										{{ cnt }}
-									</td>
-									<td>{{ show.price|number_format(2, ',', '.') }}&nbsp;&euro;</td>
-									{% if show.bookable %}
-										<td>Oui&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<a href="{{ path('show_show', {'id': show.id} ) }}" style="text-decoration:none;">Reserver</a></td>
-									{% else %}
-										<td>Non</td>
-									{% endif %}
-								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
-					<p>Total: {{ shows|length }} spectacles.</p>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-{% endblock %}
+	<script type="text/javascript">
 	
-{% block javascripts %} 
-	<script>	
+		
+		$(function(){
+			$("#image").css({"margin-left": (($(window).width() - 100 - $('#image').width())/2) + "px"  });
+			$("#table_shows").width($(window).width() - 100);
+			$('#page-content-wrapper').css('width', $(window).width() - 100);
+			$('.container').css('width', $(window).width() - 100);
+			$('.row').css('width', $(window).width() - 100);
+			$('.col-lg-12').css('width', $(window).width() - 100);
+		});
+		
+	</script>
+	
+	<script type="text/javascript">
+		
+		$(window).resize(function(){
+			$("#table_shows").width($(window).width() - 100);
+			$("#image").css({"margin-left": (($(window).width() - 100 - $('#image').width())/2) + "px"  });
+			$('#page-content-wrapper').css('width', $(window).width() - 100);
+			$('.container').css('width', $(window).width() - 100);
+			$('.row').css('width', $(window).width() - 100);
+			$('.col-lg-12').css('width', $(window).width() - 100);
+		});
+		
+	</script>
+	
+	<script>
+	
 		function htmlbodyHeightUpdate() {
 			var height3 = $(window).height()
 			var height1 = $('.nav').height() + 50
@@ -116,14 +160,12 @@
 		
 		$(document).ready( function () {
 		
-			$('#table_shows').DataTable({responsive: false});
-		
-			/*$('#table_shows').DataTable({responsive: true}); 
-			//Pour le menu escamotable
-			htmlbodyHeightUpdate()
+			$('#table_shows').DataTable({responsive: true}); 
+			htmlbodyHeightUpdate();
 			$(window).resize(function() {htmlbodyHeightUpdate()});
-			$(window).scroll(function() {height2 = $('.main').height().htmlbodyHeightUpdate()});*/
+			$(window).scroll(function() {height2 = $('.main').height()});
 		
 		});
+		
 	</script>
 {% endblock %}

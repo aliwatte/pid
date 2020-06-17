@@ -30,17 +30,27 @@ class ExportController extends AbstractController
             function () use ($results) {
                 $handle = fopen('php://output', 'r+');
                 foreach ($results as $row) {
-                    //array list fields you need to export
-                    $data = array(
-                        $row->getId(),
-                        $row->getSlug(),
-						$row->getTitle(),
-						$row->getPosterUrl(),
-						$row->getLocation()->getDesignation(),
-						$row->getBookable(),
-						$row->getPrice(),
-                    );
-                    fputcsv($handle, $data);
+					foreach($row->getRepresentations() as $represent){
+						$author_name = null;
+						$author_firstname = null;
+						foreach($row->getAuthors() as $author){
+							$author_name = $author->getFirstname();
+							$author_firstname = $author->getLastname();
+						}
+						$data = array(  //array liste a exporter
+							$row->getId(),
+							$row->getSlug(),
+							$row->getTitle(),
+							$author_name,
+							$author_firstname,
+							$row->getPosterUrl(),
+							$row->getLocation()->getDesignation(),
+							$represent->getSchedule()->format('Y-m-d H:m'),
+							$row->getBookable(),
+							$row->getPrice(),
+						);
+						fputcsv($handle, $data);
+					}
                 }
                 fclose($handle);
             }

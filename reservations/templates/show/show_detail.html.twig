@@ -1,18 +1,32 @@
  
 {% extends 'base.html.twig' %}
+
 {% block javascripts %} 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			$(".detail").css({"margin-left": (($(window).width()/2) - 225) + "px"  });
+		});
+		
+		$(window).resize(function(){
+			$(".detail").css({"margin-left": (($(window).width()/2) - 225) + "px"  });
+		});
+		
+	</script>
+	
 {% endblock %}
 
 
 {% block body %}
 
-<div class="profil">
-    <h1 style="text-align:center; color:blue;">{{ show.title|capitalize }}</h1>
+<div class="detail">
+    <h1 style="margin-left:25px; color:blue;">{{ show.title|capitalize }}</h1>
 
-    <table class="table" style="width: 400px; margin-left: 265px; float:left;">
+    <table class="table" style="width: 400px; float:left;">
         <tbody>
 			<tr style="">
 				<td colspan="2" style="border-top:none;"><img src="{{ show.posterurl }}" alt="" width="450" height="300" /></td>
@@ -50,8 +64,8 @@
 							{% set i = i + 1 %}
 						{% endfor %}
 					</ol>
-					{% else%}
-						{% for representation in show.representations%}
+					{% else %}
+						{% for representation in show.representations %}
 							{% if loop.index == i %}
 								{{ representation.schedule|date("d/m/Y") }}
 								{{ representation.schedule|date("H:m") }} 
@@ -60,10 +74,16 @@
 					{% endif %}
 				</td>
             </tr>
-            <tr>
-                <th>Lieu</th>
-                <td>{{ show.location.designation }}</td>
-            </tr>
+			<tr>
+				<th>Lieu</th>
+				<td>
+					{% if show.location is not empty %}
+						{{ show.location.designation }}
+					{% else%}
+						Pas de designation
+					{% endif %}
+				</td>
+			</tr>
 			{#
             <tr>
                 <th>Show</th>
@@ -86,14 +106,24 @@
 				{% endif %}
             </tr>
 			{% if reserver == true %}
-				<tr>
-					{% include 'reservation/_form.html.twig' %}
-				</tr>
+				{{ form_start(form, { 'attr': {'class': 'formulaire' } } ) }}
+					<tr>
+						<th>{{ form_label(form.places, 'Entrer le nombre de palce') }}</th>
+						<td style:"width:30px;">{{ form_widget(form.places, { 'attr': {'class': 'form-control'}, 'attr': {'style': 'width:40px;', 'min' : '1'} } ) }}</td>
+					</tr>
+					<tr>
+						<td>
+							<a class="btn btn-success" href="{{ path('show_show', {'id': show.id} ) }}" 
+							style="text-decoration:none;">Retour</a>
+						</td>
+						<td><button class="btn btn-primary">Reserver</button></td>
+					</tr>
+				{{ form_end(form) }}
 			{% endif %}
 		</tbody>
     </table> 
 
-	<div style='float:left; margin-left:310px; display:inline;'>
+	<div style='float:left; display:inline;'>
 		<div style='float:left; clear: both;'>
 		
 		</div>

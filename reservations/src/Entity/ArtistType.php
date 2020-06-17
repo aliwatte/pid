@@ -42,9 +42,9 @@ class ArtistType
     }
 	
 	public function __construct()
-                                     {
-                                         $this->collaborations = new ArrayCollection();
-                                     }
+    {
+	     $this->collaborations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -57,8 +57,6 @@ class ArtistType
 
         return $this;
     }
-	
-	
 	
 
     public function getType(): ?Type

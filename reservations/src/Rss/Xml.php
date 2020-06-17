@@ -12,7 +12,7 @@ class Xml
 			<rss version='2.0'>
 			<channel>
 			<title>Prochaines representations</title>
-			<link>https://localhost:8000/rss</link>
+			<link>https://mounirtec.site/rss</link>
 			<description>Mise a jours des prochaines representations</description>
 			<language>fr-be</language>
 			xml;
@@ -32,7 +32,7 @@ class Xml
 				$xml .= <<<xml
 				<item>
 					<title>{$title}</title>
-					<link>http://localhost:8000/{$url}</link>
+					<link>http://mounirtec.site/{$url}</link>
 					<description>
 						<![CDATA[
 						Designation : $slug

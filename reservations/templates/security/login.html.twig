@@ -48,3 +48,31 @@
 </div>
 
 {% endblock %}
+
+{% block javascripts %}
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			if($(window).width() < 1330){
+				$(".se_connecter").css({"margin-left": (($(window).width()/2) - 200) + "px"  });
+			}else{
+				$(".se_connecter").css({"margin-left": (($(window).width()/2) - 600) + "px"  });
+			}
+		});
+		
+	</script>
+	
+	<script type="text/javascript">
+		
+		$(window).resize(function(){
+			if($(window).width() < 1330){
+				$(".se_connecter").css({"margin-left": (($(window).width()/2) - 200) + "px"  });
+			}else{
+				$(".se_connecter").css({"margin-left": (($(window).width()/2) - 600) + "px"  });
+			}
+		});
+		
+	</script>
+	
+{% endblock %}

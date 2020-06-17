@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %} 
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			$(".payement").css({"margin-left": (($(window).width()/2) - 190) + "px"  });
+		});
+		
+		$(window).resize(function(){
+			$(".payement").css({"margin-left": (($(window).width()/2) - 190) + "px"  });
+		});
+		
+	</script>
+	
+{% endblock %}
+
+{% block body %}
+
+	<div class="payement">
+
+		<h1 style="margin-left:60px;">Payement online</h1>
+
+		<table class="table" style="width: 400px; float:left;">
+			
+			<tr>
+				<td>
+					Ceux est une simulation de payement.
+					J ai choisi cette option demo nomée <em>payement sandbox</em> pour eviter 
+					d'encoder dans le profile <em>paypal</em> des vrais informations 
+					de compte bancaire, du numero de compte , etc...
+				</td>		
+			</tr>
+			<tr>
+				<td style="text-align:center">
+					{% include 'reservation/payement.php' %}
+				</td>
+			</tr>
+			<tr>
+				<td style="text-align:center">
+					<a href="{{ path('reservation_index') }}"><button type="" class="btn btn-success">Retour</button></a>
+				<td>
+			</tr>
+			
+		</table>
+		
+	</div>
+
+{% endblock %}

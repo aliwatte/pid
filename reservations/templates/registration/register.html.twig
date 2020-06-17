@@ -7,7 +7,6 @@
 	<script src="{{ asset('lib/jquery-validation-1.19.0/jquery.validate.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('script/user_validator.js') }}"></script>
 	#}
-	
 <script>
 	$(document).ready(function(){
 		function ajax_call(id){
@@ -22,7 +21,7 @@
 		}
 		function refresh(){
 			login.innerHTML = '';
-			$.each(JSON.parse(msg['data"]), function(i, item){
+			$.each(JSON.parse(msg['data']), function(i, item){
 				var input = document.createElement('input');
 				var texte = document.createTextNode(item.prenom + " " + item.nom);
 				input.apendChild(texte);
@@ -32,11 +31,35 @@
 	});
 </script>
 	
+	<script type="text/javascript">
+		
+		$(function(){
+			if($(window).width() < 1330){
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 500) + "px"  });
+			}else{
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 700) + "px"  });
+			}
+		});
+		
+	</script>
+	
+	<script type="text/javascript">
+		
+		$(window).resize(function(){
+			if($(window).width() < 1330){
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 500) + "px"  });
+			}else{
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 700) + "px"  });
+			}
+		});
+		
+	</script>
+	
 {% endblock %}
 
 {% block body %}
 
-<div class="inscription" >
+<div class="inscription">
 	{% if app.user %}
 		<br><br><br><br><br>
 		<div class="mb-3">
@@ -61,13 +84,20 @@
 			{{ form_row(registrationForm.langue, { 'label_attr': {'class': 'control-label'}, 'attr': {'class': 'form-control', 'style' : 'height:35px;'}}) }}
 			<br>
 			{{ form_row(registrationForm.agreeTerms, { 'attr': {'style': 'margin-left:10px;'} }) }}
+			
+			<br>
+			{% if captcha_error %}
+				<li style="margin-left:25px;">{{captcha_error}}</li>
+			{% endif %}
+			
+			<script src="https://www.google.com/recaptcha/api.js?explicit&hl=fr" async defer></script>
+			<div class="g-recaptcha" data-sitekey="6Le1maUZAAAAAJuIv4Hze3Tx4a1assFiktT4sWmM"></div>
 			<br>
 			<button class="btn-lg btn-primary">S'inscrire</button>
 		<br>	
 		{{ form_end(registrationForm) }}
 		
-	{% endif %}
-
+	{% endif %}	
 </div>
-<br><br><br>
+ <br><br><br><br><br><br><br><br><br><br><br><br>
 {% endblock %}

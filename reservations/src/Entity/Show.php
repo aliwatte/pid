@@ -169,7 +169,7 @@ class Show
     {
         if (!$this->representations->contains($representation)) {
             $this->representations[] = $representation;
-            $representation->setShowId($this);
+            $representation->setShow($this);
         }
 
         return $this;
@@ -200,7 +200,7 @@ class Show
     {
         if (!$this->collaborations->contains($collaboration)) {
             $this->collaborations[] = $collaboration;
-            $collaboration->setTheShow($this);
+            $collaboration->setShows($this);
         }
 
         return $this;
@@ -211,8 +211,8 @@ class Show
         if ($this->collaborations->contains($collaboration)) {
             $this->collaborations->removeElement($collaboration);
             // set the owning side to null (unless already changed)
-            if ($collaboration->getTheShow() === $this) {
-                $collaboration->setTheShow(null);
+            if ($collaboration->getShows() === $this) {
+                $collaboration->setShows(null);
             }
         }
 

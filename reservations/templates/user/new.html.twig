@@ -5,10 +5,38 @@
 
 		{{ include('user/_form.html.twig') }}
 		
-		<div class='edit_form_btn' style="left:420px; top:375px; position: absolute;">
+		<div class='edit_form_btn' style="left:420px; top:385px; position: absolute;">
 			<a href="{{ path('user') }}"><button type="" class="btn btn-success">Retour</button></a>
 		<div>
 		
 	</div>
+	
+{% endblock %}
+
+{% block javascripts %}
+
+	<script type="text/javascript">
+		
+		$(function(){
+			if($(window).width() < 1330){
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 500) + "px"  });
+			}else{
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 700) + "px"  });
+			}
+		});
+		
+	</script>
+	
+	<script type="text/javascript">
+		
+		$(window).resize(function(){
+			if($(window).width() < 1330){
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 500) + "px"  });
+			}else{
+				$(".inscription").css({"margin-left": (($(window).width()/2) - 700) + "px"  });
+			}
+		});
+		
+	</script>
 	
 {% endblock %}

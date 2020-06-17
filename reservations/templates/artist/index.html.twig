@@ -1,34 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="show">
+<div class="table_users">
 		<div id="page-content-wrapper">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
-						<h2>Liste des artistes <span style="float:right;"><a href="{{ path('administration') }}">Retour</a></span></h2>
+						<h2>Liste des artistes<span style="float:left;"><a href="{{ path('artist') }}">Nouveau</span></a><span style="float:right;"><a href="{{ path('administration') }}">Retour</a></span></h2>
 						
-						<table id="table_users" class="display">
+						<table id="table_artist" class="display">
 							<thead>
 								<tr>
+									<th>#</th>
 									<th>Id</th>
 									<th>Nom</th>
 									<th>Prenom</th>
+									<th>Action1</th>
+									<th>Action2</th>
 								</tr>
 							</thead>
 							<tbody>
-								{% for artist in artists %}
-									<tr>
-										<td>{{ artist.id }}</td>
-										<td>{{ artist.firstname }}</td>
-										<td>{{ artist.lastname }}</td>
-									</tr>
+								{% if artists is not empty %}
+									{% set i = 1 %}
+									{% for artist in artists %}
+										<tr>
+											<td style="width:1%;">{{ i }}</td>
+											<td style="width:10%;">{{ artist.id }}</td>
+											<td style="width:45%;">{{ artist.firstname }}</td>
+											<td style="width:45%;">{{ artist.lastname }}</td>
+											<td><a href="{{ path('artist') }}">Modifier</a></td>
+											<td><a href="{{ path('artist') }}">Supprimer</a></td>
+										</tr>
+										{% set i = i + 1 %}
+									{% endfor %}
 								{% else %}
 									<tr>
-										<td colspan="8">aucune entrer trouve</td>
+										<td colspan="5">aucune entrer trouve</td>
 									</tr>
-								{% endfor %}
+								{% endif %}
 							</tbody>
+							
 						</table>
 						
 					<div>
@@ -39,6 +50,45 @@
 	
 {% endblock %}
 {% block javascripts %} 
+	
+	<script type="text/javascript">
+		
+		$(function(){
+			if($(window).width() < 1330){
+			    $("#table_artist").width($(window).width() - 100);
+				$('#page-content-wrapper').css('width', $(window).width() - 100);
+				$('.container').css('width', $(window).width() - 100);
+				$('.row').css('width', $(window).width() - 100);
+				$('.col-lg-12').css('width', $(window).width() - 100);
+			}
+			else{
+				$("#table_artist").width($(window).width() - 300);
+				$('#page-content-wrapper').css('width', $(window).width() - 300);
+				$('.container').css('width', $(window).width() - 300);
+				$('.row').css('width', $(window).width() - 300);
+				$('.col-lg-12').css('width', $(window).width() - 300);
+			}
+		});
+		
+		$(window).resize(function(){
+			if($(window).width() < 1330){
+			    $("#table_artist").width($(window).width() - 100);
+				$('#page-content-wrapper').css('width', $(window).width() - 100);
+				$('.container').css('width', $(window).width() - 100);
+				$('.row').css('width', $(window).width() - 100);
+				$('.col-lg-12').css('width', $(window).width() - 100);
+			}
+			else{
+				$("#table_artist").width($(window).width() - 300);
+				$('#page-content-wrapper').css('width', $(window).width() - 300);
+				$('.container').css('width', $(window).width() - 300);
+				$('.row').css('width', $(window).width() - 300);
+				$('.col-lg-12').css('width', $(window).width() - 300);
+			}
+		});
+		
+	</script>
+	
 	<script>	
 		function htmlbodyHeightUpdate() {
 			var height3 = $(window).height()
@@ -55,13 +105,10 @@
 		
 		$(document).ready( function () {
 		
-			$('#table_users').DataTable({responsive: false});
-		
-			/*$('#table_shows').DataTable({responsive: true}); 
-			//Pour le menu escamotable
-			htmlbodyHeightUpdate()
+			$('#table_artist').DataTable({responsive: true}); 
+			htmlbodyHeightUpdate();
 			$(window).resize(function() {htmlbodyHeightUpdate()});
-			$(window).scroll(function() {height2 = $('.main').height()htmlbodyHeightUpdate()});*/
+			$(window).scroll(function() {height2 = $('.main').height()});
 		
 		});
 	</script>
