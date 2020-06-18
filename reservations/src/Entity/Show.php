@@ -15,10 +15,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @UniqueEntity("slug")
  * @ApiResource(
  * attributes={
- * "order"={"title": "ASC"}
+ * "order"={"title": "ASC"},
+ * "security"="is_granted('ROLE_ADMIN')"
  * },
- * normalizationContext={"groups"={"spectacle:read"} 
- * })
+ * normalizationContext={"groups"={"spectacle:read"}} 
+ * )
  */
 class Show
 {

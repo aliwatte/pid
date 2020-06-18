@@ -35,3 +35,5 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         #- { path: ^/profile, roles: ROLE_USER }
         - { path: ^/profile, roles: ROLE_MEMBRE }
+        - { path: ^/api, roles: ROLE_ADMIN }
+    access_denied_url: /
