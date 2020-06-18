@@ -18,7 +18,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * "order"={"title": "ASC"},
  * "security"="is_granted('ROLE_ADMIN')"
  * },
- * normalizationContext={"groups"={"spectacle:read"}} 
+ * normalizationContext={"groups"={"spectacle:read"}}, 
+ * itemOperations={
+ *         "get": {
+ *             "method": "GET",
+ *             "controller": ApishowsController::class
+ *         },
+ *         "post": {
+ *             "method": "POST",
+ *             "controller": ApishowsController::class
+ *         },
+ *		   "delete": {
+ *             "method": "DELETE",
+ *             "controller": ApishowsController::class
+ *         }
+ * },
  * )
  */
 class Show
@@ -71,6 +85,7 @@ class Show
     /**
      * @ORM\Column(type="float")
 	 * @Groups("spectacle:read")
+	 * @Groups("spectacle:post")
      */
     private $price;
 

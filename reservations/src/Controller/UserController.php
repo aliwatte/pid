@@ -199,11 +199,11 @@ class UserController extends AbstractController
     public function delete($id ,Request $request, User $user, Session $session): Response
     {
 		$this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+		$entityManager = $this->getDoctrine()->getManager();
 		$membre = '';
 		if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
 			$repository = $this->getDoctrine()->getRepository(User::class);
-			$entityManager = $this->getDoctrine()->getManager();
+			//$entityManager = $this->getDoctrine()->getManager();
 			$membre = $repository->findOneById($id);
 		}
 		else {
