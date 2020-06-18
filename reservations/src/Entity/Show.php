@@ -13,7 +13,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
  * @ORM\Entity(repositoryClass="App\Repository\ShowRepository")
  * @ORM\Table(name="shows")
  * @UniqueEntity("slug")
- * @ApiResource
+ * @ApiResource(
+ * attributes={
+ * "order"={"title": "ASC"}
+ * },
+ * normalizationContext={"groups"={"spectacle:read"} 
+ * })
  */
 class Show
 {

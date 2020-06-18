@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArtistTypeRepository")
@@ -15,19 +16,21 @@ class ArtistType
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @Groups("spectacle:read")
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist")
      * @ORM\JoinColumn(nullable=false)
+	 * @Groups("spectacle:read") 
      */
     private $artist;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="type")
      * @ORM\JoinColumn(nullable=false)
+	 * @Groups("spectacle:read")
      */
     private $type;
 

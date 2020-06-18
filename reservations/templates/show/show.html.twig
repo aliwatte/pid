@@ -117,6 +117,22 @@
 	</script>
 	
 	<script type="text/javascript">
+		$(function(){
+			if($(window).width() > 813){
+				$("#image").css({"margin-top": (0 + "px" ) });
+			}
+			else if($(window).width() < 814 && $(window).width() > 767){
+				$("#image").css({"margin-top": (40 + "px" ) });
+			}
+			else if($(window).width() < 768 && $(window).width() > 574){
+				$("#image").css({"margin-top": (167 + "px" ) });
+			}else if($(window).width() < 575){
+				$("#image").css({"margin-top": (207 + "px" ) })
+			}
+		});
+	</script>
+	
+	<script type="text/javascript">
 	
 		
 		$(function(){
@@ -139,6 +155,17 @@
 			$('.container').css('width', $(window).width() - 100);
 			$('.row').css('width', $(window).width() - 100);
 			$('.col-lg-12').css('width', $(window).width() - 100);
+			if($(window).width() >  813 ){
+				$("#image").css({"margin-top": (0 + "px" ) });
+			}
+			else if($(window).width() < 814 && $(window).width() > 767){
+				$("#image").css({"margin-top": (40 + "px" ) });
+			}
+			else if($(window).width() < 768 && $(window).width() > 574){
+				$("#image").css({"margin-top": (167 + "px" ) });
+			}else if($(window).width() < 575){
+				$("#image").css({"margin-top": (207 + "px" ) })
+			}
 		});
 		
 	</script>
